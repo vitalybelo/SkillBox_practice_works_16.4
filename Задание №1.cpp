@@ -41,7 +41,6 @@ public:
 
 
 int main() {
-    setlocale(LC_ALL, "Russian_Russia.1251");
     speedRunner speedRun;
 
     do {
