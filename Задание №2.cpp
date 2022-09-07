@@ -4,7 +4,6 @@ using namespace std;
 bool DigitsOnlyEntered (const string& checkString);
 
 int main() {
-    setlocale(LC_ALL, "Russian_Russia.1251");
 
     string number;
     do {
