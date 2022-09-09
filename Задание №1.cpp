@@ -1,4 +1,6 @@
 #include <iostream>
+#include <string>
+#include "windows.h"
 using namespace std;
 
 class speedRunner {
@@ -51,8 +53,24 @@ int main() {
             speedRun.setSpeed(speedIn);
         } while (!speedRun.inRange(-1.00, 150.00, 0.001));
 
-        while (speedRun.isBigger(0.1,0.001))
-            printf("Скорость: %.2f %s", speedRun.decreaseSpeed(0.1),"\n");
+        // отображение скорости без перехода на новую строку
+        // у меня в Clion из-за эха отображается некорректно
+        // точно работает во внешней консоли (любая подходит)
+        int eraseCount = 0;
+        cout << "Скорость: ";
+        while (speedRun.isBigger(0.1,0.01)) {
+            // затираем старое значение скорости
+            for (int i = 0; i < eraseCount; i++) cout << "\b";
+            char speed[10];
+            sprintf(speed,"%.2f", speedRun.decreaseSpeed(0.1));
+            string speedString = string (speed);
+            cout << speedString;
+            eraseCount = speedString.length();
+            Sleep(1);
+        }
+
+//        while (speedRun.isBigger(0.1,0.01))
+//            printf("Скорость: %.2f %s", speedRun.decreaseSpeed(0.1),"\n");
 
     } while (!speedRun.equals(-1.00,0.01));
 
