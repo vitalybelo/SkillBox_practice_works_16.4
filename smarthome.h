@@ -64,7 +64,7 @@ public:
         } else if (param == "off") {
             toggle = false;
         } else {
-            cerr << "íåêîððåêòíîå çíà÷åíèå ïàðàìåòðà";
+            cerr << "Ð½ÐµÐºÐ¾Ñ€Ñ€ÐµÐºÑ‚Ð½Ð¾Ðµ Ð·Ð½Ð°Ñ‡ÐµÐ½Ð¸Ðµ Ð¿Ð°Ñ€Ð°Ð¼ÐµÑ‚Ñ€Ð°";
             return false;
         }
         return true;
@@ -74,7 +74,7 @@ public:
         for (int i = 0; i < param.length(); i++)
             if (param[i] < '0' || param[i] > '9') {
                 if (param[i] == '-') continue;
-                cout << "íåêîððåêòíîå çíà÷åíèå ïàðàìåòðà";
+                cout << "Ð½ÐµÐºÐ¾Ñ€Ñ€ÐµÐºÑ‚Ð½Ð¾Ðµ Ð·Ð½Ð°Ñ‡ÐµÐ½Ð¸Ðµ Ð¿Ð°Ñ€Ð°Ð¼ÐµÑ‚Ñ€Ð°";
                 return false;
             }
         return true;
@@ -82,14 +82,14 @@ public:
 
     void displayCommandHelp () {
         cout << endl;
-        cout << "Äîñòóïíûå êîìàíäû ïàíåëè óïðàâëåíèÿ:\n";
-        cout << "common on/off - îáùèé âûêëþ÷àòåëü\n";
-        cout << "light on/off - âûêëþ÷àòåëü ñâåòà\n";
-        cout << "in ÷èñëî - òåìïåðàòóðà âíóòðè\n";
-        cout << "out ÷èñëî - òåìïåðàòóðà ñíàðóæè\n";
-        cout << "time ÷èñëî - óñòàíîâêà ÷àñà äíÿ\n";
-        cout << "move on/off - äàò÷èê äâèæåíèå\n";
-        cout << "exit - çàâåðøåíèå ïðîãðàììû\n";
+        cout << "Ð”Ð¾ÑÑ‚ÑƒÐ¿Ð½Ñ‹Ðµ ÐºÐ¾Ð¼Ð°Ð½Ð´Ñ‹ Ð¿Ð°Ð½ÐµÐ»Ð¸ ÑƒÐ¿Ñ€Ð°Ð²Ð»ÐµÐ½Ð¸Ñ:\n";
+        cout << "common on/off - Ð¾Ð±Ñ‰Ð¸Ð¹ Ð²Ñ‹ÐºÐ»ÑŽÑ‡Ð°Ñ‚ÐµÐ»ÑŒ\n";
+        cout << "light on/off - Ð²Ñ‹ÐºÐ»ÑŽÑ‡Ð°Ñ‚ÐµÐ»ÑŒ ÑÐ²ÐµÑ‚Ð°\n";
+        cout << "in Ñ‡Ð¸ÑÐ»Ð¾ - Ñ‚ÐµÐ¼Ð¿ÐµÑ€Ð°Ñ‚ÑƒÑ€Ð° Ð²Ð½ÑƒÑ‚Ñ€Ð¸\n";
+        cout << "out Ñ‡Ð¸ÑÐ»Ð¾ - Ñ‚ÐµÐ¼Ð¿ÐµÑ€Ð°Ñ‚ÑƒÑ€Ð° ÑÐ½Ð°Ñ€ÑƒÐ¶Ð¸\n";
+        cout << "time Ñ‡Ð¸ÑÐ»Ð¾ - ÑƒÑÑ‚Ð°Ð½Ð¾Ð²ÐºÐ° Ñ‡Ð°ÑÐ° Ð´Ð½Ñ\n";
+        cout << "move on/off - Ð´Ð°Ñ‚Ñ‡Ð¸Ðº Ð´Ð²Ð¸Ð¶ÐµÐ½Ð¸Ðµ\n";
+        cout << "exit - Ð·Ð°Ð²ÐµÑ€ÑˆÐµÐ½Ð¸Ðµ Ð¿Ñ€Ð¾Ð³Ñ€Ð°Ð¼Ð¼Ñ‹\n";
     }
 
     bool compileCommand () {
@@ -98,7 +98,7 @@ public:
         do {
             command = "help";
             cout << "------------------------------------\n";
-            cout << "Ââåäèòå êîìàíäó (èëè help): ";
+            cout << "Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ ÐºÐ¾Ð¼Ð°Ð½Ð´Ñƒ (Ð¸Ð»Ð¸ help): ";
             getline(cin,inputString);
             parserCommandLine(inputString, command, argument);
             if (command == "help")
@@ -135,12 +135,12 @@ public:
     void sensorControlPanel () {
         cout << endl;
         cout << "------------------------------------\n";
-        cout << "Âðåìÿ: " << currentHour << ":00\n";
+        cout << "Ð’Ñ€ÐµÐ¼Ñ: " << currentHour << ":00\n";
         cout << "------------------------------------\n";
-        cout << "Îáùèé âûêëþ÷àòåëü: " << (switches & COMMON_TOGGLE ? "ON" : "OFF") << endl;
-        cout << "Òåìïåðàòóðà âíóòðè: " << insideTempSensor << endl;
-        cout << "Òåìïåðàòóðà ñíàðóæè: " << outsideTempSensor << endl;
-        cout << "Äâèæåíèå ñíàðóæè äîìà:"<< (movementSensor ? "" : " íå") << " îáíàðóæåíî\n";
+        cout << "ÐžÐ±Ñ‰Ð¸Ð¹ Ð²Ñ‹ÐºÐ»ÑŽÑ‡Ð°Ñ‚ÐµÐ»ÑŒ: " << (switches & COMMON_TOGGLE ? "ON" : "OFF") << endl;
+        cout << "Ð¢ÐµÐ¼Ð¿ÐµÑ€Ð°Ñ‚ÑƒÑ€Ð° Ð²Ð½ÑƒÑ‚Ñ€Ð¸: " << insideTempSensor << endl;
+        cout << "Ð¢ÐµÐ¼Ð¿ÐµÑ€Ð°Ñ‚ÑƒÑ€Ð° ÑÐ½Ð°Ñ€ÑƒÐ¶Ð¸: " << outsideTempSensor << endl;
+        cout << "Ð”Ð²Ð¸Ð¶ÐµÐ½Ð¸Ðµ ÑÐ½Ð°Ñ€ÑƒÐ¶Ð¸ Ð´Ð¾Ð¼Ð°:"<< (movementSensor ? "" : " Ð½Ðµ") << " Ð¾Ð±Ð½Ð°Ñ€ÑƒÐ¶ÐµÐ½Ð¾\n";
         cout << "------------------------------------\n";
 
     }
@@ -157,7 +157,7 @@ public:
             switches &= ~BOILER_INSIDE;
         }
         boilerON = switches & BOILER_INSIDE;
-        cout << "ÎÒÎÏËÅÍÈÅ äîìà: " << (boilerON ? "ON" : "OFF") << endl;
+        cout << "ÐžÐ¢ÐžÐŸÐ›Ð•ÐÐ˜Ð• Ð´Ð¾Ð¼Ð°: " << (boilerON ? "ON" : "OFF") << endl;
     }
 
     void checkOutsideBoilerStatus () {
@@ -172,7 +172,7 @@ public:
             switches &= ~BOILER_OUTSIDE;
         }
         boilerON = switches & BOILER_OUTSIDE;
-        cout << "ÎÒÎÏËÅÍÈÅ âîäîïðîâîäà: " << (boilerON ? "ON" : "OFF") << endl;
+        cout << "ÐžÐ¢ÐžÐŸÐ›Ð•ÐÐ˜Ð• Ð²Ð¾Ð´Ð¾Ð¿Ñ€Ð¾Ð²Ð¾Ð´Ð°: " << (boilerON ? "ON" : "OFF") << endl;
 
     }
 
@@ -189,7 +189,7 @@ public:
             switches &= ~AIR_CONDITIONER;
         }
         conditionerON = switches & AIR_CONDITIONER;
-        cout << "ÊÎÍÄÈÖÈÎÍÈÐÎÂÀÍÈÅ äîìà: " << (conditionerON ? "ON" : "OFF") << endl;
+        cout << "ÐšÐžÐÐ”Ð˜Ð¦Ð˜ÐžÐÐ˜Ð ÐžÐ’ÐÐÐ˜Ð• Ð´Ð¾Ð¼Ð°: " << (conditionerON ? "ON" : "OFF") << endl;
     }
 
     void checkOutsideLighting () {
@@ -211,7 +211,7 @@ public:
             switches &= ~LIGHTS_OUTSIDE;
         }
         lightON = switches & LIGHTS_OUTSIDE;
-        cout << "ÎÑÂÅÙÅÍÈÅ ëàíäøàôòà: " << (lightON ? "ON" : "OFF") << endl;
+        cout << "ÐžÐ¡Ð’Ð•Ð©Ð•ÐÐ˜Ð• Ð»Ð°Ð½Ð´ÑˆÐ°Ñ„Ñ‚Ð°: " << (lightON ? "ON" : "OFF") << endl;
     }
 
     void checkInsideLighting () {
@@ -225,9 +225,9 @@ public:
             }
         }
         bool lightON = (switches & LIGHTS_INSIDE) && (switches & COMMON_TOGGLE);
-        cout << "ÎÑÂÅÙÅÍÈÅ âíóòðè äîìà: " << (lightON ? "ON" : "OFF") << endl;
+        cout << "ÐžÐ¡Ð’Ð•Ð©Ð•ÐÐ˜Ð• Ð²Ð½ÑƒÑ‚Ñ€Ð¸ Ð´Ð¾Ð¼Ð°: " << (lightON ? "ON" : "OFF") << endl;
         if (lightON)
-            cout << "ÒÅÌÏÅÐÀÒÓÐÀ öâåòà: " << lightTemperature << endl;
+            cout << "Ð¢Ð•ÐœÐŸÐ•Ð ÐÐ¢Ð£Ð Ð Ñ†Ð²ÐµÑ‚Ð°: " << lightTemperature << endl;
     }
 
     void smartHomeStatusDisplay () {
