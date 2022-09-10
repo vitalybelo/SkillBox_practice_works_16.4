@@ -16,37 +16,25 @@ private:
     int currentHour;
     int insideTempSensor;
     int outsideTempSensor;
-    bool insideLightSwitch;
     bool movementSensor;
-    bool commonToggle;
 
 public:
-    SmartHome(int currentHour, int insideTemperature, int outsideTemperature,
-              bool insideLightSwitch, bool movementSensor, bool commonToggle) {
+    SmartHome(int currentHour, int insideTemp, int outsideTemp,
+              bool insideLight, bool movementSensor, bool commonToggle) {
         switches = 0;
         SmartHome::currentHour = currentHour;
-        SmartHome::insideTempSensor = insideTemperature;
-        SmartHome::outsideTempSensor = outsideTemperature;
+        SmartHome::insideTempSensor = insideTemp;
+        SmartHome::outsideTempSensor = outsideTemp;
         SmartHome::movementSensor = movementSensor;
-        setLightToggle(insideLightSwitch);
-        setCommonToggle(commonToggle);
+        setSwitchToggle(LIGHTS_INSIDE, insideLight);
+        setSwitchToggle(COMMON_TOGGLE,commonToggle);
     }
 
-    void setLightToggle(bool toggle) {
-        SmartHome::insideLightSwitch = toggle;
+    void setSwitchToggle (toggle_switch toggleSwitch, bool toggle) {
         if (toggle) {
-            switches |= LIGHTS_INSIDE;
+            switches |= toggleSwitch;
         } else {
-            switches &= ~LIGHTS_INSIDE;
-        }
-    }
-
-    void setCommonToggle(bool toggle) {
-        SmartHome::commonToggle = toggle;
-        if (toggle) {
-            switches |= COMMON_TOGGLE;
-        } else {
-            switches &= ~COMMON_TOGGLE;
+            switches &= ~toggleSwitch;
         }
     }
 
@@ -120,11 +108,11 @@ public:
         if (command == "common") {
             bool toggle;
             if (getBooleanParam(argument, toggle))
-                    setCommonToggle(toggle);
+                setSwitchToggle(COMMON_TOGGLE, toggle);
         } else if (command == "light") {
             bool toggle;
             if (getBooleanParam(argument, toggle))
-                setLightToggle(toggle);
+                setSwitchToggle(LIGHTS_INSIDE, toggle);
         } else if (command == "move") {
             bool toggle;
             if (getBooleanParam(argument, toggle))
@@ -149,7 +137,7 @@ public:
         cout << "------------------------------------\n";
         cout << "Время: " << currentHour << ":00\n";
         cout << "------------------------------------\n";
-        cout << "Общий выключатель: " << (commonToggle ? "ON" : "OFF") << endl;
+        cout << "Общий выключатель: " << (switches & COMMON_TOGGLE ? "ON" : "OFF") << endl;
         cout << "Температура внутри: " << insideTempSensor << endl;
         cout << "Температура снаружи: " << outsideTempSensor << endl;
         cout << "Движение снаружи дома:"<< (movementSensor ? "" : " не") << " обнаружено\n";
@@ -159,7 +147,7 @@ public:
 
     void checkInsideBoilerStatus () {
         bool boilerON = switches & BOILER_INSIDE;
-        if (commonToggle) {
+        if (switches & COMMON_TOGGLE) {
             if (boilerON) {
                 if (insideTempSensor >= 25) switches &= ~BOILER_INSIDE;
             } else {
@@ -174,7 +162,7 @@ public:
 
     void checkOutsideBoilerStatus () {
         bool boilerON = switches & BOILER_OUTSIDE;
-        if (commonToggle) {
+        if (switches & COMMON_TOGGLE) {
             if (boilerON) {
                 if (outsideTempSensor > 5) switches &= ~BOILER_OUTSIDE;
             } else {
@@ -191,7 +179,7 @@ public:
     void checkAirConditionerStatus () {
 
         bool conditionerON = switches & AIR_CONDITIONER;
-        if (commonToggle) {
+        if (switches & COMMON_TOGGLE) {
             if (conditionerON) {
                 if (insideTempSensor <= 25) switches &= ~AIR_CONDITIONER;
             } else {
@@ -207,7 +195,7 @@ public:
     void checkOutsideLighting () {
 
         bool lightON = switches & LIGHTS_OUTSIDE;
-        if (commonToggle) {
+        if (switches & COMMON_TOGGLE) {
             if (lightON) {
                 bool daytime = currentHour >= 5 && currentHour < 16;
                 if (daytime || !movementSensor)
@@ -236,7 +224,7 @@ public:
                 lightTemperature = 2700;
             }
         }
-        bool lightON = (switches & LIGHTS_INSIDE) && commonToggle;
+        bool lightON = (switches & LIGHTS_INSIDE) && (switches & COMMON_TOGGLE);
         cout << "ОСВЕЩЕНИЕ внутри дома: " << (lightON ? "ON" : "OFF") << endl;
         if (lightON)
             cout << "ТЕМПЕРАТУРА цвета: " << lightTemperature << endl;
@@ -251,3 +239,4 @@ public:
         checkOutsideLighting();
     }
 };
+
